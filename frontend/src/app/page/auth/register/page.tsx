@@ -1,4 +1,5 @@
-// pages/auth/register.tsx
+// src/app/page/auth/register/page.tsx
+"use client";
 import { useState } from 'react';
 import { 
 Box, 
