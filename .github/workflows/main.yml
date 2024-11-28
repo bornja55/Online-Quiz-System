@@ -1,0 +1,74 @@
+name: Online Quiz System CI/CD
+
+on:
+push:
+  branches: [ main, development ]
+pull_request:
+  branches: [ main ]
+
+jobs:
+build-and-test:
+  runs-on: ubuntu-latest
+
+  strategy:
+    matrix:
+      node-version: [18.x]
+      python-version: [3.9]
+
+  steps:
+  - uses: actions/checkout@v3
+
+  # Setup Node.js
+  - name: Setup Node.js ${{ matrix.node-version }}
+    uses: actions/setup-node@v3
+    with:
+      node-version: ${{ matrix.node-version }}
+      cache: 'npm'
+      cache-dependency-path: frontend/package-lock.json
+
+  # Setup Python
+  - name: Setup Python ${{ matrix.python-version }}
+    uses: actions/setup-python@v4
+    with:
+      python-version: ${{ matrix.python-version }}
+      cache: 'pip'
+
+  # Frontend Build & Test
+  - name: Frontend - Install Dependencies
+    working-directory: ./frontend
+    run: npm ci
+
+  - name: Frontend - Run Tests
+    working-directory: ./frontend
+    run: npm test
+
+  - name: Frontend - Build
+    working-directory: ./frontend
+    run: npm run build
+
+  # Backend Build & Test
+  - name: Backend - Install Dependencies
+    working-directory: ./backend
+    run: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+
+  - name: Backend - Run Tests
+    working-directory: ./backend
+    run: python -m pytest
+
+  # Security Scan
+  - name: Run Security Scan
+    uses: snyk/actions/node@master
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+deploy:
+  needs: build-and-test
+  runs-on: ubuntu-latest
+  if: github.ref == 'refs/heads/main'
+
+  steps:
+  - name: Deploy to Production
+    run: echo "Add your deployment steps here"
+    # Add actual deployment steps based on your hosting service
