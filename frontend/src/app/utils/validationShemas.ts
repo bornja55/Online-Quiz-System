@@ -1,7 +1,7 @@
 // utils/validationSchemas.ts
 import * as Yup from 'yup';
 
-export const loginValidationSchema = Yup.object({
+export const loginSchema = Yup.object().shape({
 email: Yup.string()
   .email('รูปแบบอีเมลไม่ถูกต้อง')
   .required('กรุณากรอกอีเมล'),
@@ -10,7 +10,7 @@ password: Yup.string()
   .required('กรุณากรอกรหัสผ่าน')
 });
 
-export const registerValidationSchema = Yup.object({
+export const registerSchema = Yup.object().shape({
 email: Yup.string()
   .email('รูปแบบอีเมลไม่ถูกต้อง')
   .required('กรุณากรอกอีเมล'),
