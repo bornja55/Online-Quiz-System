@@ -1,0 +1,51 @@
+name: Quiz System CI/CD
+
+on:
+push:
+  branches: [ main ]
+pull_request:
+  branches: [ main ]
+
+jobs:
+build-and-test:
+  runs-on: ubuntu-latest
+
+  steps:
+  - uses: actions/checkout@v2
+
+  # Setup Node.js for Frontend
+  - name: Setup Node.js
+    uses: actions/setup-node@v2
+    with:
+      node-version: '18'
+
+  # Install Frontend Dependencies
+  - name: Install Frontend Dependencies
+    working-directory: ./frontend
+    run: npm install
+
+  # Run Frontend Tests
+  - name: Run Frontend Tests
+    working-directory: ./frontend
+    run: npm test
+
+  # Setup Python for Backend
+  - name: Setup Python
+    uses: actions/setup-python@v2
+    with:
+      python-version: '3.9'
+
+  # Install Backend Dependencies
+  - name: Install Backend Dependencies
+    working-directory: ./backend
+    run: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+
+  # Run Backend Tests
+  - name: Run Backend Tests
+    working-directory: ./backend
+    env:
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+    run: python -m pytest
