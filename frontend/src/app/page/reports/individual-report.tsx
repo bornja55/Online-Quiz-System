@@ -1,4 +1,4 @@
-// pages/reports/individual-report.tsx
+// app/pages/reports/individual-report.tsx
 import { 
     Box, 
     Container, 
