@@ -1,4 +1,4 @@
-// src/app/page/auth/login/page.tsx
+// src/app/auth/login/page.tsx
 "use client";
 import { loginValidationSchema } from '@/app/utils/validationSchemas';
 import { useState } from 'react';
