@@ -1,6 +1,6 @@
 // src/app/page/auth/login/page.tsx
 "use client";
-import { loginValidationSchema } from '@/utils/validationSchemas';
+import { loginValidationSchema } from '@/app/utils/validationSchemas';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import { 
