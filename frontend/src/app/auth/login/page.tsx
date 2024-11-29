@@ -1,4 +1,5 @@
-// pages/auth/login.tsx
+// src/app/page/auth/login/page.tsx
+"use client";
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import { 
