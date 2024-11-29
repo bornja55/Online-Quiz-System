@@ -1,88 +1,100 @@
-// app/pages/reports/individual-report.tsx
-import { 
-    Box, 
-    Container, 
-    Paper, 
-    Typography, 
-    Grid,
-    LinearProgress,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow 
-    } from '@mui/material';
-    
-    const IndividualReport = () => {
-    return (
-      <Container maxWidth="lg">
+'use client';
+
+import React from 'react';
+import { Grid, Typography, Paper } from '@mui/material';
+import { ResponsiveBar } from '@nivo/bar';
+
+interface StudentData {
+  studentName: string;
+  grade: string;
+  scores: {
+    skill: string;
+    studentScore: number;
+    averageScore: number;
+  }[];
+}
+
+interface IndividualReportProps {
+  studentData: StudentData;
+}
+
+const IndividualReport: React.FC<IndividualReportProps> = ({ studentData }) => {
+  return (
+    <Paper sx={{ p: 3, m: 2 }}>
+      <Grid container spacing={2}>
         {/* ส่วนหัวรายงาน */}
-        <Paper sx={{ p: 3, mb: 2 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5">รายงานผลการทดสอบ</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography>ชื่อ-นามสกุล: {studentName}</Typography>
-              <Typography>ระดับชั้น: {grade}</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography>โรงเรียน: {school}</Typography>
-              <Typography>วิชา: {subject}</Typography>
-            </Grid>
-          </Grid>
-        </Paper>
-    
-        {/* คะแนนรวม */}
-        <Paper sx={{ p: 3, mb: 2 }}>
-          <Typography variant="h6">ผลการประเมิน</Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
-            <Box sx={{ width: '100%', mr: 1 }}>
-              <LinearProgress 
-                variant="determinate" 
-                value={(score/totalScore)*100} 
-              />
-            </Box>
-            <Typography>
-              {score}/{totalScore} คะแนน
-            </Typography>
-          </Box>
-        </Paper>
-    
-        {/* ตารางคะแนนแยกตามทักษะ */}
-        <Paper sx={{ p: 3, mb: 2 }}>
-          <Typography variant="h6" sx={{ mb: 2 }}>ผลการวิเคราะห์ตามทักษะการเรียนรู้</Typography>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>ทักษะ</TableCell>
-                <TableCell align="center">คะแนนเต็ม</TableCell>
-                <TableCell align="center">คะแนนที่ได้</TableCell>
-                <TableCell align="center">ร้อยละ</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {skillScores.map((skill) => (
-                <TableRow key={skill.name}>
-                  <TableCell>{skill.name}</TableCell>
-                  <TableCell align="center">{skill.totalScore}</TableCell>
-                  <TableCell align="center">{skill.score}</TableCell>
-                  <TableCell align="center">
-                    {((skill.score/skill.totalScore)*100).toFixed(2)}%
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Paper>
-    
-        {/* กราฟแสดงผลเปรียบเทียบ */}
-        <Paper sx={{ p: 3 }}>
-          <Typography variant="h6" sx={{ mb: 2 }}>การเปรียบเทียบผลคะแนน</Typography>
-          {/* เพิ่ม Chart Component ตรงนี้ */}
-        </Paper>
-      </Container>
-    );
-    };
-    
-    export default IndividualReport;
+        <Grid item xs={12}>
+          <Typography variant="h5" gutterBottom>
+            รายงานผลการประเมินรายบุคคล
+          </Typography>
+        </Grid>
+
+        {/* ข้อมูลนักเรียน */}
+        <Grid item xs={6}>
+          <Typography>ชื่อ-นามสกุล: {studentData.studentName}</Typography>
+          <Typography>ระดับชั้น: {studentData.grade}</Typography>
+        </Grid>
+
+        {/* กราฟแสดงผลคะแนน */}
+        <Grid item xs={12} sx={{ height: 400 }}>
+          <ResponsiveBar
+            data={studentData.scores}
+            keys={['studentScore', 'averageScore']}
+            indexBy="skill"
+            margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+            padding={0.3}
+            valueScale={{ type: 'linear' }}
+            colors={{ scheme: 'paired' }}
+            borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: 'ทักษะ',
+              legendPosition: 'middle',
+              legendOffset: 40
+            }}
+            axisLeft={{
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: 'คะแนน',
+              legendPosition: 'middle',
+              legendOffset: -40
+            }}
+            labelSkipWidth={12}
+            labelSkipHeight={12}
+            legends={[
+              {
+                dataFrom: 'keys',
+                anchor: 'bottom-right',
+                direction: 'column',
+                justify: false,
+                translateX: 120,
+                translateY: 0,
+                itemsSpacing: 2,
+                itemWidth: 100,
+                itemHeight: 20,
+                itemDirection: 'left-to-right',
+                itemOpacity: 0.85,
+                symbolSize: 20
+              }
+            ]}
+          />
+        </Grid>
+
+        {/* ตารางแสดงรายละเอียดคะแนน */}
+        <Grid item xs={12}>
+          <Typography variant="h6" gutterBottom>
+            รายละเอียดคะแนน
+          </Typography>
+          {/* เพิ่มตารางแสดงคะแนนตามต้องการ */}
+        </Grid>
+      </Grid>
+    </Paper>
+  );
+};
+
+export default IndividualReport;
