@@ -1,15 +1,15 @@
 // src/app/components/reports/ComparisonChart.tsx
-"use client";
 import { ResponsiveBar } from '@nivo/bar';
+import { BarDatum } from '@nivo/bar';
 
-// กำหนด interface สำหรับ data
-interface ComparisonData {
+// แก้ไข interface ให้รองรับ index signature
+interface ComparisonData extends BarDatum {
   skill: string;
   studentScore: number;
   averageScore: number;
+  [key: string]: string | number; // เพิ่ม index signature
 }
 
-// กำหนด props type
 interface ComparisonChartProps {
   data: ComparisonData[];
 }

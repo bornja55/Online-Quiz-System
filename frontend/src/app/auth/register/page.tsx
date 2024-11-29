@@ -1,7 +1,6 @@
 // src/app/auth/register/page.tsx
 "use client";
 
-import { useState } from 'react';
 import { useFormik } from 'formik';
 import { registerValidationSchema } from '@/app/utils/validationSchemas';
 import { 
