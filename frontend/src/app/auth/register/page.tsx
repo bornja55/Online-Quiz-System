@@ -1,5 +1,6 @@
 // src/app/page/auth/register/page.tsx
 "use client";
+import { loginValidationSchema } from '@/utils/validationSchemas';
 import { useState } from 'react';
 import { 
 Box, 
