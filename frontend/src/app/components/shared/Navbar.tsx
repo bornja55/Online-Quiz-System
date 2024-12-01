@@ -1,8 +1,35 @@
-// components/shared/Navbar.tsx
+// src/app/components/shared/Navbar.tsx
 'use client';
 
 import Link from 'next/link';
 import { useState } from 'react';
+
+const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+  <Link
+    href={href}
+    className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+  >
+    {children}
+  </Link>
+);
+
+const MobileNavLink = ({ 
+  href, 
+  onClick, 
+  children 
+}: { 
+  href: string; 
+  onClick: () => void;
+  children: React.ReactNode 
+}) => (
+  <Link
+    href={href}
+    onClick={onClick}
+    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+  >
+    {children}
+  </Link>
+);
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,7 +40,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
-            <span className="text-xl font-bold">Quiz System</span>
+            <span className="text-xl font-bold">ระบบทดสอบออนไลน์</span>
           </Link>
 
           {/* Desktop Menu */}
@@ -66,34 +93,5 @@ export default function Navbar() {
         )}
       </div>
     </nav>
-  );
-}
-
-// NavLink Component
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link
-      href={href}
-      className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
-    >
-      {children}
-    </Link>
-  );
-}
-
-// MobileNavLink Component
-function MobileNavLink({ href, onClick, children }: { 
-  href: string; 
-  onClick: () => void;
-  children: React.ReactNode 
-}) {
-  return (
-    <Link
-      href={href}
-      onClick={onClick}
-      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
-    >
-      {children}
-    </Link>
   );
 }

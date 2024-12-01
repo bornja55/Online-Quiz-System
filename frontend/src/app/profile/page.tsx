@@ -1,207 +1,167 @@
-function App() {
-  const [profile, setProfile] = React.useState({
-    name: 'ผู้ใช้ทดสอบ',
-    email: 'test@example.com',
+'use client';
+
+import { useState, ChangeEvent, FormEvent } from 'react';
+import Image from 'next/image';
+import { Card } from '@/app/components/shared/Card';
+import { Button } from '@/app/components/shared/Button';
+
+interface UserData {
+  name: string;
+  email: string;
+  role: string;
+  avatar: string;
+}
+
+interface PasswordData {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export default function ProfilePage() {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [user, setUser] = useState<UserData>({
+    name: 'ผู้ใช้ตัวอย่าง',
+    email: 'user@example.com',
     role: 'นักเรียน',
-    joinDate: '2024-01-01',
-    avatar: 'https://placehold.co/100x100',
-    bio: 'นักเรียนชั้นมัธยมศึกษาปีที่ 6'
+    avatar: 'https://placehold.co/200x200'
   });
 
-  const [isEditing, setIsEditing] = React.useState(false);
-  const [isChangingPassword, setIsChangingPassword] = React.useState(false);
-  const [passwordForm, setPasswordForm] = React.useState({
+  const [formData, setFormData] = useState<PasswordData>({
     currentPassword: '',
     newPassword: '',
     confirmPassword: ''
   });
 
-  const handleUpdateProfile = (e) => {
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUser(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // TODO: Implement profile update logic
     setIsEditing(false);
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // TODO: Implement password change logic
-    setIsChangingPassword(false);
+    setFormData({
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: ''
+    });
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">โปรไฟล์</h1>
+      <h1 className="text-2xl font-bold mb-8">โปรไฟล์ของฉัน</h1>
 
-      <div className="max-w-2xl space-y-6">
-        {/* ข้อมูลส่วนตัว */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">ข้อมูลส่วนตัว</h2>
-            <button
-              onClick={() => setIsEditing(!isEditing)}
-              className="text-blue-600 hover:text-blue-700"
-            >
-              {isEditing ? 'ยกเลิก' : 'แก้ไข'}
-            </button>
-          </div>
-
-          <form onSubmit={handleUpdateProfile} className="space-y-4">
-            {/* รูปโปรไฟล์ */}
-            <div className="flex items-center space-x-4">
-              <img
-                src={profile.avatar}
-                alt="Profile"
-                className="w-20 h-20 rounded-full"
-              />
-              {isEditing && (
-                <button
-                  type="button"
-                  className="text-sm text-blue-600 hover:text-blue-700"
-                >
-                  เปลี่ยนรูป
-                </button>
-              )}
-            </div>
-
-            {/* ชื่อ */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                ชื่อ-นามสกุล
-              </label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={profile.name}
-                  onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                />
-              ) : (
-                <p className="mt-1 text-gray-900">{profile.name}</p>
-              )}
-            </div>
-
-            {/* อีเมล */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                อีเมล
-              </label>
-              <p className="mt-1 text-gray-900">{profile.email}</p>
-            </div>
-
-            {/* บทบาท */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                บทบาท
-              </label>
-              <p className="mt-1 text-gray-900">{profile.role}</p>
-            </div>
-
-            {/* ประวัติ */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                ประวัติ
-              </label>
-              {isEditing ? (
-                <textarea
-                  value={profile.bio}
-                  onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-                  rows={3}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                />
-              ) : (
-                <p className="mt-1 text-gray-900">{profile.bio}</p>
-              )}
-            </div>
-
-            {isEditing && (
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                >
-                  บันทึก
-                </button>
+      <div className="grid md:grid-cols-2 gap-8">
+        <Card title="ข้อมูลส่วนตัว">
+          <div className="flex flex-col items-center mb-6">
+            <Image
+              src={user.avatar}
+              alt="Profile"
+              width={200}
+              height={200}
+              className="rounded-full mb-4"
+            />
+            {!isEditing ? (
+              <div className="text-center">
+                <h2 className="text-xl font-semibold">{user.name}</h2>
+                <p className="text-gray-600">{user.email}</p>
+                <p className="text-gray-600">{user.role}</p>
+                <Button onClick={handleEditToggle} variant="secondary" className="mt-4">
+                  แก้ไขโปรไฟล์
+                </Button>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="w-full max-w-md">
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2">ชื่อ</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={user.name}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border rounded"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2">อีเมล</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={user.email}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border rounded"
+                  />
+                </div>
+                <div className="flex justify-end space-x-4">
+                  <Button type="button" variant="secondary" onClick={handleEditToggle}>
+                    ยกเลิก
+                  </Button>
+                  <Button type="submit">บันทึก</Button>
+                </div>
+              </form>
             )}
-          </form>
-        </div>
-
-        {/* เปลี่ยนรหัสผ่าน */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">เปลี่ยนรหัสผ่าน</h2>
-            <button
-              onClick={() => setIsChangingPassword(!isChangingPassword)}
-              className="text-blue-600 hover:text-blue-700"
-            >
-              {isChangingPassword ? 'ยกเลิก' : 'เปลี่ยนรหัสผ่าน'}
-            </button>
           </div>
+        </Card>
 
-          {isChangingPassword && (
-            <form onSubmit={handlePasswordChange} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  รหัสผ่านปัจจุบัน
-                </label>
-                <input
-                  type="password"
-                  value={passwordForm.currentPassword}
-                  onChange={(e) =>
-                    setPasswordForm({
-                      ...passwordForm,
-                      currentPassword: e.target.value,
-                    })
-                  }
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  รหัสผ่านใหม่
-                </label>
-                <input
-                  type="password"
-                  value={passwordForm.newPassword}
-                  onChange={(e) =>
-                    setPasswordForm({
-                      ...passwordForm,
-                      newPassword: e.target.value,
-                    })
-                  }
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  ยืนยันรหัสผ่านใหม่
-                </label>
-                <input
-                  type="password"
-                  value={passwordForm.confirmPassword}
-                  onChange={(e) =>
-                    setPasswordForm({
-                      ...passwordForm,
-                      confirmPassword: e.target.value,
-                    })
-                  }
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                >
-                  บันทึกรหัสผ่าน
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
+        <Card title="เปลี่ยนรหัสผ่าน">
+          <form onSubmit={handlePasswordSubmit} className="w-full max-w-md">
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">รหัสผ่านปัจจุบัน</label>
+              <input
+                type="password"
+                name="currentPassword"
+                value={formData.currentPassword}
+                onChange={handlePasswordChange}
+                className="w-full px-3 py-2 border rounded"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">รหัสผ่านใหม่</label>
+              <input
+                type="password"
+                name="newPassword"
+                value={formData.newPassword}
+                onChange={handlePasswordChange}
+                className="w-full px-3 py-2 border rounded"
+              />
+            </div>
+            <div className="mb-6">
+              <label className="block text-gray-700 mb-2">ยืนยันรหัสผ่านใหม่</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handlePasswordChange}
+                className="w-full px-3 py-2 border rounded"
+              />
+            </div>
+            <div className="flex justify-end">
+              <Button type="submit">เปลี่ยนรหัสผ่าน</Button>
+            </div>
+          </form>
+        </Card>
       </div>
     </div>
   );

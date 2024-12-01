@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import { useState } from 'react'; // เหลือแค่ import เดียว
 import Link from 'next/link';
-import { Card } from '@/components/shared/Card';
+import { Card } from '@/app/components/shared/Card';
 
 interface Quiz {
   id: string;
@@ -13,7 +13,7 @@ interface Quiz {
 }
 
 export default function QuizPage() {
-  const [quizzes, setQuizzes] = React.useState<Quiz[]>([
+  const [quizzes] = useState<Quiz[]>([
     {
       id: '1',
       title: 'คณิตศาสตร์ บทที่ 1',
