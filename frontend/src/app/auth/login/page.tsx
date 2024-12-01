@@ -1,94 +1,76 @@
-// src/app/auth/login/page.tsx
-"use client";
-import { loginValidationSchema } from '@/app/utils/validationSchemas';
-import { useState } from 'react';
-import { useFormik } from 'formik';
-import { 
-Box, 
-TextField, 
-Button, 
-Typography, 
-Container,
-CircularProgress 
-} from '@mui/material';
+'use client';
 
+import React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/shared/Button';
 
-export default function Login() {
-const [isSubmitting, setIsSubmitting] = useState(false);
-
-const formik = useFormik({
-  initialValues: {
+export default function LoginPage() {
+  const router = useRouter();
+  const [formData, setFormData] = React.useState({
     email: '',
     password: ''
-  },
-  validationSchema: loginValidationSchema,
-  onSubmit: async (values) => {
-    setIsSubmitting(true);
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Login attempt:', values);
-    } catch (error) {
-      console.error('Login error:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
-});
+  });
 
-return (
-  <Container maxWidth="sm">
-    <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Typography component="h1" variant="h5">
-        เข้าสู่ระบบ
-      </Typography>
-      <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="อีเมล"
-          name="email"
-          autoComplete="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-          disabled={isSubmitting}
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="รหัสผ่าน"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
-          disabled={isSubmitting}
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <CircularProgress size={24} color="inherit" />
-          ) : (
-            'เข้าสู่ระบบ'
-          )}
-        </Button>
-      </Box>
-    </Box>
-  </Container>
-);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Implement login logic
+    router.push('/dashboard');
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-lg">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-gray-900">เข้าสู่ระบบ</h2>
+          <p className="mt-2 text-sm text-gray-600">
+            หรือ{' '}
+            <Link href="/auth/register" className="text-blue-600 hover:text-blue-500">
+              สมัครสมาชิกใหม่
+            </Link>
+          </p>
+        </div>
+
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                อีเมล
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                รหัสผ่าน
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              />
+            </div>
+          </div>
+
+          <div>
+            <Button type="submit" variant="primary" className="w-full">
+              เข้าสู่ระบบ
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }

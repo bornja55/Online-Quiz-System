@@ -1,166 +1,108 @@
-// src/app/auth/register/page.tsx
-"use client";
+'use client';
 
-import { useFormik } from 'formik';
-import { registerValidationSchema } from '@/app/utils/validationSchemas';
-import { 
-  Box, 
-  TextField, 
-  Button, 
-  Typography, 
-  Container,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Grid,
-  SelectChangeEvent
-} from '@mui/material';
+import React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/shared/Button';
 
-export default function Register() {
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-      confirmPassword: '',
-      firstName: '',
-      lastName: '',
-      role: '',
-      school: '',
-      grade: ''
-    },
-    validationSchema: registerValidationSchema,
-    onSubmit: (values) => {
-      console.log('Register attempt:', values);
-    },
+export default function RegisterPage() {
+  const router = useRouter();
+  const [formData, setFormData] = React.useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
   });
 
-  const handleRoleChange = (event: SelectChangeEvent<string>) => {
-    formik.setFieldValue('role', event.target.value);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Implement registration logic
+    router.push('/dashboard');
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography component="h1" variant="h5">
-          ลงทะเบียน
-        </Typography>
-        <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-lg">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-gray-900">สมัครสมาชิก</h2>
+          <p className="mt-2 text-sm text-gray-600">
+            หรือ{' '}
+            <Link href="/auth/login" className="text-blue-600 hover:text-blue-500">
+              เข้าสู่ระบบ
+            </Link>
+          </p>
+        </div>
+
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                ชื่อ-นามสกุล
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
                 required
-                fullWidth
-                label="ชื่อ"
-                name="firstName"
-                value={formik.values.firstName}
-                onChange={formik.handleChange}
-                error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-                helperText={formik.touched.firstName && formik.errors.firstName}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                label="นามสกุล"
-                name="lastName"
-                value={formik.values.lastName}
-                onChange={formik.handleChange}
-                error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-                helperText={formik.touched.lastName && formik.errors.lastName}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                label="อีเมล"
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                อีเมล
+              </label>
+              <input
+                id="email"
                 name="email"
                 type="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
                 required
-                fullWidth
-                label="รหัสผ่าน"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                รหัสผ่าน
+              </label>
+              <input
+                id="password"
                 name="password"
                 type="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                error={formik.touched.password && Boolean(formik.errors.password)}
-                helperText={formik.touched.password && formik.errors.password}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
                 required
-                fullWidth
-                label="ยืนยันรหัสผ่าน"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                ยืนยันรหัสผ่าน
+              </label>
+              <input
+                id="confirmPassword"
                 name="confirmPassword"
                 type="password"
-                value={formik.values.confirmPassword}
-                onChange={formik.handleChange}
-                error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
-                helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                value={formData.confirmPassword}
+                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth error={formik.touched.role && Boolean(formik.errors.role)}>
-                <InputLabel>บทบาท</InputLabel>
-                <Select
-                  name="role"
-                  value={formik.values.role}
-                  label="บทบาท"
-                  onChange={handleRoleChange}
-                >
-                  <MenuItem value="student">นักเรียน</MenuItem>
-                  <MenuItem value="teacher">ครู/อาจารย์</MenuItem>
-                  <MenuItem value="admin">ผู้ดูแลระบบ</MenuItem>
-                </Select>
-                {formik.touched.role && formik.errors.role && (
-                  <Typography color="error" variant="caption">
-                    {formik.errors.role}
-                  </Typography>
-                )}
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="โรงเรียน"
-                name="school"
-                value={formik.values.school}
-                onChange={formik.handleChange}
-              />
-            </Grid>
-            {formik.values.role === 'student' && (
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="ระดับชั้น"
-                  name="grade"
-                  value={formik.values.grade}
-                  onChange={formik.handleChange}
-                />
-              </Grid>
-            )}
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            ลงทะเบียน
-          </Button>
-        </Box>
-      </Box>
-    </Container>
+            </div>
+          </div>
+
+          <div>
+            <Button type="submit" variant="primary" className="w-full">
+              สมัครสมาชิก
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
