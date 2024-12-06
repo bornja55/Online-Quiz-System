@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { quizService } from '@/app/services/quiz.service';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Question } from '@/app/types/auth.types'; // นำเข้าประเภท Question
 
 const QuizForm: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -17,7 +18,25 @@ const QuizForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await quizService.createQuiz({ title, questions });
+      // แปลงข้อมูลคำถามให้ตรงตามประเภท Question
+      const formattedQuestions: Question[] = questions.map((q, index) => ({
+        id: `question-${index + 1}`, // สร้าง ID สำหรับคำถาม
+        type: 'multiple-choice', // กำหนดประเภทคำถาม (ปรับตามที่คุณต้องการ)
+        text: q.question, // ใช้ข้อความคำถาม
+        choices: q.choices.map((choice, choiceIndex) => ({
+          id: `choice-${index + 1}-${choiceIndex + 1}`, // สร้าง ID สำหรับตัวเลือก
+          text: choice,
+          isCorrect: false, // กำหนดว่าเป็นตัวเลือกที่ถูกต้องหรือไม่ (ปรับตามที่คุณต้องการ)
+          explanation: '', // สามารถเพิ่มคำอธิบายได้ถ้าต้องการ
+        })),
+        points: 1, // กำหนดคะแนน (ปรับตามที่คุณต้องการ)
+        timeLimit: undefined, // กำหนดเวลาจำกัด (ปรับตามที่คุณต้องการ)
+        imageUrl: undefined, // กำหนด URL รูปภาพ (ปรับตามที่คุณต้องการ)
+        tags: [], // กำหนดแท็ก (ปรับตามที่คุณต้องการ)
+        difficulty: 'easy', // กำหนดระดับความยาก (ปรับตามที่คุณต้องการ)
+      }));
+
+      await quizService.createQuiz({ title, questions: formattedQuestions });
       toast.success('Quiz created successfully!');
     } catch (error) {
       toast.error('Failed to create quiz.');
