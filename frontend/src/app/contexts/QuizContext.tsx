@@ -1,4 +1,4 @@
-// src/app/context/QuizContext.tsx
+// src/app/contexts/QuizContext.tsx
 'use client';
 
 import { createContext, useContext, useReducer, useCallback } from 'react';
