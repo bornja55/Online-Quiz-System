@@ -1,8 +1,6 @@
 //app/types/quiz.types.ts
 
 export type QuestionType = 'multiple-choice' | 'true-false' | 'matching';
-
-// src/app/types/quiz.types.ts
 export interface Question {
   id: number;
   text: string;
@@ -13,6 +11,7 @@ export interface Question {
   points: number; // คะแนนที่ได้จากคำถามนี้
   tags: string[]; // แท็กที่เกี่ยวข้องกับคำถาม
   difficulty: string; // ความยากของคำถาม เช่น "easy", "medium", "hard"
+  imageUrl?: string; // เพิ่มคุณสมบัติ imageUrl (อาจจะเป็น optional)
 }
 
 export interface Choice {

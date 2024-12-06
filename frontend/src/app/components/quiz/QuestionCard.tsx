@@ -85,24 +85,6 @@ export default function QuestionCard({
         {/* Question Text */}
         <div className="mb-6">
           <h3 className="text-xl font-semibold mb-4">{question.text}</h3>
-          {question.imageUrl && (
-            <div className="relative w-full h-64 mb-4">
-              <Image
-                src={question.imageUrl}
-                alt="Question image"
-                fill
-                className={`object-contain transition-opacity duration-300 ${
-                  imageLoaded ? 'opacity-100' : 'opacity-0'
-                }`}
-                onLoad={() => setImageLoaded(true)}
-              />
-              {!imageLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
-                </div>
-              )}
-            </div>
-          )}
         </div>
 
         {/* Choices */}
