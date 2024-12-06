@@ -1,5 +1,27 @@
 // app/types/auth.types.ts
 import type { User } from './user.types';
+export type QuestionType = 'multiple-choice' | 'true-false' | 'matching';
+
+export interface Choice {
+  id: string;
+  text: string;
+  isCorrect: boolean;
+  explanation?: string;
+}
+
+export interface Question {
+  id: string;
+  type: QuestionType;
+  text: string;
+  choices: Choice[];
+  points: number;
+  timeLimit?: number;
+  imageUrl?: string;
+  tags: string[];
+  difficulty: 'easy' | 'medium' | 'hard';
+}
+
+// ... (ส่วนอื่น ๆ ของโค้ด)
 
 export interface LoginCredentials {
   email: string;
@@ -50,3 +72,4 @@ export interface EmailVerification {
   email: string;
   code: string;
 }
+
