@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useQuiz } from '@/context/QuizContext';
+import { useQuiz } from '@/app/context/QuizContext';
 
 interface QuizTimerProps {
   initialTime: number; // เวลาในวินาที
