@@ -1,3 +1,5 @@
+// src/app/components/auth/RegisterForm.tsx
+
 'use client';
 
 import { useState } from 'react';
@@ -5,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Button from '@/app/components/shared/Button';
 import { Card } from '@/app/components/shared/Card';
-import type { RegisterFormData } from '@/app/types/auth.types';
+import type { RegisterFormData } from '@/app/types/auth.types'; // ตรวจสอบให้แน่ใจว่าชื่อถูกต้อง
 
 interface RegisterFormProps {
   onSuccess?: () => void;
