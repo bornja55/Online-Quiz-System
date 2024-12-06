@@ -5,14 +5,14 @@ import React, { useState } from 'react';
 import { quizService } from '@/app/services/quiz.service';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Question } from '@/app/types/auth.types'; // นำเข้าประเภท Question
+import { Question } from '@/app/types/quiz.types'; // นำเข้าประเภท Question จาก quiz.types
 
 const QuizForm: React.FC = () => {
   const [title, setTitle] = useState('');
-  const [questions, setQuestions] = useState([{ question: '', choices: ['', ''] }]);
+  const [questions, setQuestions] = useState([{ question: '', choices: ['', ''], imageUrl: '', correctAnswer: '' }]);
 
   const handleAddQuestion = () => {
-    setQuestions([...questions, { question: '', choices: ['', ''] }]);
+    setQuestions([...questions, { question: '', choices: ['', ''], imageUrl: '', correctAnswer: '' }]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,19 +21,19 @@ const QuizForm: React.FC = () => {
       // แปลงข้อมูลคำถามให้ตรงตามประเภท Question
       const formattedQuestions: Question[] = questions.map((q, index) => ({
         id: `question-${index + 1}`, // สร้าง ID สำหรับคำถาม
-        type: 'multiple-choice', // กำหนดประเภทคำถาม (ปรับตามที่คุณต้องการ)
+        type: 'multiple-choice', // กำหนดประเภทคำถาม
         text: q.question, // ใช้ข้อความคำถาม
         choices: q.choices.map((choice, choiceIndex) => ({
           id: `choice-${index + 1}-${choiceIndex + 1}`, // สร้าง ID สำหรับตัวเลือก
           text: choice,
-          isCorrect: false, // กำหนดว่าเป็นตัวเลือกที่ถูกต้องหรือไม่ (ปรับตามที่คุณต้องการ)
+          isCorrect: choice === q.correctAnswer, // กำหนดว่าเป็นตัวเลือกที่ถูกต้องหรือไม่
           explanation: '', // สามารถเพิ่มคำอธิบายได้ถ้าต้องการ
         })),
-        points: 1, // กำหนดคะแนน (ปรับตามที่คุณต้องการ)
-        timeLimit: undefined, // กำหนดเวลาจำกัด (ปรับตามที่คุณต้องการ)
-        imageUrl: undefined, // กำหนด URL รูปภาพ (ปรับตามที่คุณต้องการ)
-        tags: [], // กำหนดแท็ก (ปรับตามที่คุณต้องการ)
-        difficulty: 'easy', // กำหนดระดับความยาก (ปรับตามที่คุณต้องการ)
+        points: 1, // กำหนดคะแนน
+        timeLimit: undefined, // กำหนดเวลาจำกัด
+        imageUrl: q.imageUrl || undefined, // กำหนด URL รูปภาพ
+        tags: [], // กำหนดแท็ก
+        difficulty: 'easy', // กำหนดระดับความยาก
       }));
 
       await quizService.createQuiz({ title, questions: formattedQuestions });
@@ -65,6 +65,16 @@ const QuizForm: React.FC = () => {
             }}
             required
           />
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={q.imageUrl}
+            onChange={(e) => {
+              const newQuestions = [...questions];
+              newQuestions[index].imageUrl = e.target.value;
+              setQuestions(newQuestions);
+            }}
+          />
           {q.choices.map((choice, choiceIndex) => (
             <input
               key={choiceIndex}
@@ -79,6 +89,20 @@ const QuizForm: React.FC = () => {
               required
             />
           ))}
+          <select
+            value={q.correctAnswer}
+            onChange={(e) => {
+              const newQuestions = [...questions];
+              newQuestions[index].correctAnswer = e.target.value;
+              setQuestions(newQuestions);
+            }}
+            required
+          >
+            <option value="" disabled>Select Correct Answer</option>
+            {q.choices.map((choice, choiceIndex) => (
+              <option key={choiceIndex} value={choice}>{choice}</option>
+            ))}
+          </select>
         </div>
       ))}
       <button type="button" onClick={handleAddQuestion}>Add Question</button>
