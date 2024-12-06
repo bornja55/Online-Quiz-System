@@ -1,4 +1,6 @@
 // src/app/quiz/edit/[id]/page.tsx
+"use client";
+
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';

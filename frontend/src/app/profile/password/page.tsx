@@ -1,4 +1,6 @@
 // src/app/profile/password/page.tsx
+"use client";
+
 import React, { useState } from 'react';
 
 const ChangePasswordPage = () => {

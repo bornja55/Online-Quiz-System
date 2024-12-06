@@ -1,3 +1,6 @@
+// src/app/contexts/ThemeContext.tsx
+"use client";
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // สร้าง Context สำหรับ Theme

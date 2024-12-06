@@ -1,4 +1,5 @@
-'use client';
+// src/app/profile/password/page.tsx
+"use client";
 
 import { useState, ChangeEvent, FormEvent } from 'react';
 import Image from 'next/image';
