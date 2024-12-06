@@ -1,3 +1,4 @@
+// app/types/auth.types.ts
 import type { User } from './user.types';
 
 export interface LoginCredentials {
@@ -7,6 +8,16 @@ export interface LoginCredentials {
 }
 
 export interface RegisterCredentials {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
+  role: 'teacher' | 'student';
+  acceptTerms: boolean;
+}
+
+// เพิ่ม RegisterFormData ที่นี่
+export interface RegisterFormData {
   email: string;
   password: string;
   confirmPassword: string;
