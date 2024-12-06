@@ -1,4 +1,6 @@
 // ในไฟล์ app/quiz/take/[id]/page.tsx
+'use client';
+
 import QuestionCard from '@/app/components/quiz/QuestionCard';
 import { useState } from 'react';
 
