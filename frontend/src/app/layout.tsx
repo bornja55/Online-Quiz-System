@@ -1,11 +1,11 @@
-//app/layout.tsx
+// app/layout.tsx
 
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
-import Navbar from "@/app/components/shared/Navbar";
-import Footer from "@/app/components/shared/Footer";
-import { ToastContainer,Toaster } from "react-hot-toast";
+import "./globals.css"; // นำเข้าไฟล์ CSS ทั่วไป
+import Navbar from "@/app/components/shared/Navbar"; // นำเข้า Navbar
+import Footer from "@/app/components/shared/Footer"; // นำเข้า Footer
+import { Toaster } from "react-hot-toast"; // นำเข้า Toaster สำหรับการแจ้งเตือน
 import { ThemeProvider } from "@/app/contexts/ThemeContext"; // นำเข้า ThemeProvider
 
 // Font configuration
@@ -101,25 +101,25 @@ export default function RootLayout({
           </main>
           <Footer />
           <Toaster
-            position="top-right"
+            position="top-right" // ตำแหน่งของ Toaster
             toastOptions={{
-              duration: 5000,
+              duration: 5000, // ระยะเวลาที่ toast จะแสดง
               style: {
-                background: "#363636",
-                color: "#fff",
+                background: "#363636", // สีพื้นหลังของ toast
+                color: "#fff", // สีตัวอักษร
               },
               success: {
-                duration: 3000,
+                duration: 3000, // ระยะเวลาสำหรับ toast ที่สำเร็จ
                 iconTheme: {
-                  primary: "#4ade80",
-                  secondary: "#fff",
+                  primary: "#4ade80", // สีไอคอนสำหรับ toast ที่สำเร็จ
+                  secondary: "#fff", // สีไอคอนรอง
                 },
               },
               error: {
-                duration: 4000,
+                duration: 4000, // ระยะเวลาสำหรับ toast ที่มีข้อผิดพลาด
                 iconTheme: {
-                  primary: "#ef4444",
-                  secondary: "#fff",
+                  primary: "#ef4444", // สีไอคอนสำหรับ toast ที่มีข้อผิดพลาด
+                  secondary: "#fff", // สีไอคอนรอง
                 },
               },
             }}
