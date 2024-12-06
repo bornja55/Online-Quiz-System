@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Button } from '@/app/components/shared/Button';
+import Button from '@/app/components/shared/Button';
 import { Card } from '@/app/components/shared/Card';
-import type { RegisterFormData } from '@/types/auth.types';
+import type { RegisterFormData } from '@/app/types/auth.types';
 
 interface RegisterFormProps {
   onSuccess?: () => void;
