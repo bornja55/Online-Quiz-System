@@ -1,3 +1,5 @@
+//app/types/quiz.types.ts
+
 export type QuestionType = 'multiple-choice' | 'true-false' | 'matching';
 
 export interface Choice {
@@ -17,6 +19,7 @@ export interface Question {
   imageUrl?: string;
   tags: string[];
   difficulty: 'easy' | 'medium' | 'hard';
+  explanation?: string; // เพิ่ม explanation ที่นี่
 }
 
 export interface Quiz {
