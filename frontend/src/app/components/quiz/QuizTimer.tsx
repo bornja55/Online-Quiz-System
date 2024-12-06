@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useQuiz } from '@/app/contexts/QuizContext';
+import { useQuiz } from '@/app/context/QuizContext';
 
 interface QuizTimerProps {
   initialTime: number; // เวลาในวินาที
@@ -12,7 +12,8 @@ interface QuizTimerProps {
 
 export default function QuizTimer({ initialTime, onTimeUp, className = '' }: QuizTimerProps) {
   const [timeLeft, setTimeLeft] = useState(initialTime);
-  const { isPaused } = useQuiz();
+  const { state } = useQuiz(); // นำเข้า state
+  const { isPaused } = state; // เข้าถึง isPaused จาก state
 
   useEffect(() => {
     if (timeLeft <= 0) {
