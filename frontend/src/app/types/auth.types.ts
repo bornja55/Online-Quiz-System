@@ -19,6 +19,8 @@ export interface Question {
   imageUrl?: string;
   tags: string[];
   difficulty: 'easy' | 'medium' | 'hard';
+  correctAnswer: string; // เพิ่มคุณสมบัตินี้
+  explanation: string; // เพิ่มคุณสมบัตินี้
 }
 
 // ... (ส่วนอื่น ๆ ของโค้ด)
