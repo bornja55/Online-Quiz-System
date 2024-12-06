@@ -5,14 +5,14 @@ import React, { useState } from 'react';
 import { quizService } from '@/app/services/quiz.service';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Question } from '@/app/types/quiz.types'; // นำเข้าประเภท Question จาก quiz.types
+import { Question } from '@/app/types/quiz.types'; // นำเข้าประเภท Question
 
 const QuizForm: React.FC = () => {
   const [title, setTitle] = useState('');
-  const [questions, setQuestions] = useState([{ question: '', choices: ['', ''], imageUrl: '', correctAnswer: '' }]);
+  const [questions, setQuestions] = useState([{ question: '', choices: ['', ''], imageUrl: '', correctAnswer: '', explanation: '' }]);
 
   const handleAddQuestion = () => {
-    setQuestions([...questions, { question: '', choices: ['', ''], imageUrl: '', correctAnswer: '' }]);
+    setQuestions([...questions, { question: '', choices: ['', ''], imageUrl: '', correctAnswer: '', explanation: '' }]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -27,13 +27,15 @@ const QuizForm: React.FC = () => {
           id: `choice-${index + 1}-${choiceIndex + 1}`, // สร้าง ID สำหรับตัวเลือก
           text: choice,
           isCorrect: choice === q.correctAnswer, // กำหนดว่าเป็นตัวเลือกที่ถูกต้องหรือไม่
-          explanation: '', // สามารถเพิ่มคำอธิบายได้ถ้าต้องการ
+          explanation: q.explanation || '', // สามารถเพิ่มคำอธิบายได้ถ้าต้องการ
         })),
         points: 1, // กำหนดคะแนน
         timeLimit: undefined, // กำหนดเวลาจำกัด
         imageUrl: q.imageUrl || undefined, // กำหนด URL รูปภาพ
         tags: [], // กำหนดแท็ก
         difficulty: 'easy', // กำหนดระดับความยาก
+        correctAnswer: q.correctAnswer, // เพิ่มคุณสมบัติ correctAnswer
+        explanation: q.explanation || '', // เพิ่มคุณสมบัติ explanation
       }));
 
       await quizService.createQuiz({ title, questions: formattedQuestions });
@@ -103,6 +105,16 @@ const QuizForm: React.FC = () => {
               <option key={choiceIndex} value={choice}>{choice}</option>
             ))}
           </select>
+          <input
+            type="text"
+            placeholder="Explanation"
+            value={q.explanation}
+            onChange={(e) => {
+              const newQuestions = [...questions];
+              newQuestions[index].explanation = e.target.value;
+              setQuestions(newQuestions);
+            }}
+          />
         </div>
       ))}
       <button type="button" onClick={handleAddQuestion}>Add Question</button>
