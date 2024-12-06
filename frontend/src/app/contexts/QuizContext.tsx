@@ -2,7 +2,7 @@
 'use client';
 
 import { createContext, useContext, useReducer, useCallback } from 'react';
-import type { Quiz, Question, QuizAttempt } from '@/types/quiz.types';
+import type { Quiz, Question, QuizAttempt } from '@/app/types/quiz.types';
 
 interface QuizState {
   currentQuiz: Quiz | null;

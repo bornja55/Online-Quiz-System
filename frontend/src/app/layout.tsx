@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/app/components/shared/Navbar";
 import Footer from "@/app/components/shared/Footer";
 import { Toaster } from "react-hot-toast";
-import { ThemeProvider } from "@/contexts/ThemeContext"; // นำเข้า ThemeProvider
+import { ThemeProvider } from "@/app/contexts/ThemeContext"; // นำเข้า ThemeProvider
 
 // Font configuration
 const geistSans = localFont({

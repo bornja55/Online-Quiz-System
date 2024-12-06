@@ -3,8 +3,8 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { AuthState, User } from '@/types/auth.types';
-import { authService } from '@/services/auth.service';
+import { AuthState, User } from '@/app/types/auth.types';
+import { authService } from '@/app/services/auth.service';
 
 interface AuthContextType extends AuthState {
   login: (email: string, password: string) => Promise<void>;

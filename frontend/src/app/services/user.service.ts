@@ -1,6 +1,6 @@
 import { apiService } from './api.service';
-import type { User, UserProfile, UserStats } from '@/types/user.types';
-import type { PaginationParams } from '@/types/api.types';
+import type { User, UserProfile, UserStats } from '@/app/types/user.types';
+import type { PaginationParams } from '@/app/types/api.types';
 
 class UserService {
   private readonly BASE_URL = '/users';

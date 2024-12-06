@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '@/app/components/shared/Button';
 import { Card } from '@/app/components/shared/Card';
-import type { Question, Choice } from '@/types/quiz.types';
+import type { Question, Choice } from '@/app/types/quiz.types';
 
 interface QuestionCardProps {
   question: Question;

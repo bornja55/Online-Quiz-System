@@ -2,7 +2,7 @@
 'use client';
 
 import React from 'react';
-import { Card } from '@/components/shared/Card';
+import { Card } from '@/app/components/shared/Card';
 import {
   LineChart,
   Line,

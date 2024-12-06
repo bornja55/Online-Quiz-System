@@ -1,5 +1,5 @@
 // ในไฟล์ quiz/take/[id]/page.tsx
-import QuestionCard from '@/components/quiz/QuestionCard';
+import QuestionCard from '@/app/components/quiz/QuestionCard';
 
 const question = {
   id: 1,

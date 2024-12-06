@@ -1,5 +1,5 @@
 // src/app/services/auth.service.ts
-import { LoginCredentials, RegisterData, User } from '@/types/auth.types';
+import { LoginCredentials, RegisterData, User } from '@/app/types/auth.types';
 
 class AuthService {
   private baseUrl = process.env.NEXT_PUBLIC_API_URL;

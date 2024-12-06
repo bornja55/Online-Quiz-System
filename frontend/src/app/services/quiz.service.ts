@@ -1,6 +1,6 @@
 import { apiService } from './api.service';
-import type { Quiz, Question, QuizAttempt } from '@/types/quiz.types';
-import type { PaginationParams } from '@/types/api.types';
+import type { Quiz, Question, QuizAttempt } from '@/app/types/quiz.types';
+import type { PaginationParams } from '@/app/types/api.types';
 
 class QuizService {
   private readonly BASE_URL = '/quizzes';

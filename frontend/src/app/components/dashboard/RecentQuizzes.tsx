@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Card } from '@/components/shared/Card';
+import { Card } from '@/app/components/shared/Card';
 
 interface Quiz {
   id: string;
