@@ -1,4 +1,4 @@
-import type { ApiResponse } from '@/types/api.types';
+import { ApiResponse, ApiError } from '@/types/api.types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
@@ -9,9 +9,8 @@ class ApiService {
     data?: any;
     params?: any;
   }): Promise<ApiResponse<T>> {
-    const { method, url, data, params } = config;
-
     try {
+      const { method, url, data, params } = config;
       const headers = {
         'Content-Type': 'application/json',
         // Add auth header if needed
@@ -25,15 +24,22 @@ class ApiService {
       });
 
       if (!response.ok) {
-        throw new Error('API request failed');
+        throw await response.json();
       }
 
-      const result = await response.json();
-      return result;
+      return await response.json();
     } catch (error) {
-      console.error('API Error:', error);
-      throw error;
+      throw this.handleError(error);
     }
+  }
+
+  private handleError(error: any): ApiError {
+    return {
+      code: error.code || 'UNKNOWN_ERROR',
+      message: error.message || 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ',
+      status: error.status || 500,
+      details: error.details,
+    };
   }
 
   public async get<T>(url: string, params?: any): Promise<ApiResponse<T>> {

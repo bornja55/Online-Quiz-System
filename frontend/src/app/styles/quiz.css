@@ -1,0 +1,10 @@
+/* src/app/styles/quiz.css */
+.quiz-container {
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  .quiz-question {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
