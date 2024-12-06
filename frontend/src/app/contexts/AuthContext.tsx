@@ -3,7 +3,8 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { AuthState, User } from '@/app/types/auth.types';
+import { AuthState } from '@/app/types/auth.types';
+import type { User } from '@/app/types/user.types'; // นำเข้า User จาก user.types.ts
 import { authService } from '@/app/services/auth.service';
 
 interface AuthContextType extends AuthState {
