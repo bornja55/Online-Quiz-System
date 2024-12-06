@@ -4,7 +4,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import Image from 'next/image';
 import { Card } from '@/app/components/shared/Card';
-import { Button } from '@/app/components/shared/Button';
+import Button from '@/app/components/shared/Button';
 
 interface UserData {
   name: string;

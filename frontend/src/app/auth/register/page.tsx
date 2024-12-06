@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/app/components/shared/Button';
+import Button from '@/app/components/shared/Button';
 
 export default function RegisterPage() {
   const router = useRouter();
