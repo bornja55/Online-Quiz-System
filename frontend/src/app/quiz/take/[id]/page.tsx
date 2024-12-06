@@ -3,8 +3,9 @@
 
 import QuestionCard from '@/app/components/quiz/QuestionCard';
 import { useState } from 'react';
+import type { Question } from '@/app/types/quiz.types'; // นำเข้าประเภท Question
 
-const question = {
+const question: Question = {
   id: 1,
   text: "1 + 1 = ?",
   choices: [
@@ -14,7 +15,11 @@ const question = {
     { id: 'd', text: '4' }
   ],
   correctAnswer: 'b',
-  explanation: "1 บวก 1 เท่ากับ 2"
+  explanation: "1 บวก 1 เท่ากับ 2",
+  type: "multiple-choice", // ประเภทของคำถาม
+  points: 1, // คะแนนที่ได้จากคำถามนี้
+  tags: ["math", "addition"], // แท็กที่เกี่ยวข้อง
+  difficulty: "easy" // ความยากของคำถาม
 };
 
 export default function QuizPage() {

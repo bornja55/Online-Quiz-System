@@ -2,24 +2,24 @@
 
 export type QuestionType = 'multiple-choice' | 'true-false' | 'matching';
 
+// src/app/types/quiz.types.ts
+export interface Question {
+  id: number;
+  text: string;
+  choices: Choice[];
+  correctAnswer: string;
+  explanation: string;
+  type: string; // ประเภทของคำถาม เช่น "multiple-choice"
+  points: number; // คะแนนที่ได้จากคำถามนี้
+  tags: string[]; // แท็กที่เกี่ยวข้องกับคำถาม
+  difficulty: string; // ความยากของคำถาม เช่น "easy", "medium", "hard"
+}
+
 export interface Choice {
   id: string;
   text: string;
-  isCorrect: boolean;
-  explanation?: string;
-}
-
-export interface Question {
-  id: string;
-  type: QuestionType;
-  text: string;
-  choices: Choice[];
-  points: number;
-  timeLimit?: number;
-  imageUrl?: string;
-  tags: string[];
-  difficulty: 'easy' | 'medium' | 'hard';
-  explanation?: string; // เพิ่ม explanation ที่นี่
+  isCorrect?: boolean; // ตัวเลือกที่ถูกต้อง
+  explanation: string;
 }
 
 export interface Quiz {
