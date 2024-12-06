@@ -9,29 +9,31 @@ import { Question } from '@/app/types/quiz.types'; // นำเข้าปร�
 
 const QuizForm: React.FC = () => {
   const [title, setTitle] = useState('');
-  const [questions, setQuestions] = useState([{ 
-    question: '', 
-    choices: ['', ''], 
-    imageUrl: '', 
-    correctAnswer: '', 
-    explanation: '', 
-    points: 1, // กำหนดคะแนนเริ่มต้น
-    tags: [], // แท็กเริ่มต้น
-    difficulty: 'easy', // ระดับความยากเริ่มต้น
-    type: 'multiple-choice' // ประเภทคำถามเริ่มต้น
+  const [questions, setQuestions] = useState<Question[]>([{
+    id: 1, // ID เริ่มต้น
+    text: '',
+    choices: ['', ''],
+    correctAnswer: '',
+    explanation: '',
+    points: 1,
+    tags: [],
+    difficulty: 'easy',
+    type: 'multiple-choice',
+    imageUrl: '',
   }]);
 
   const handleAddQuestion = () => {
-    setQuestions([...questions, { 
-      question: '', 
-      choices: ['', ''], 
-      imageUrl: '', 
-      correctAnswer: '', 
-      explanation: '', 
-      points: 1, 
-      tags: [], 
-      difficulty: 'easy', 
-      type: 'multiple-choice' 
+    setQuestions([...questions, {
+      id: questions.length + 1, // สร้าง ID ใหม่
+      text: '',
+      choices: ['', ''],
+      correctAnswer: '',
+      explanation: '',
+      points: 1,
+      tags: [],
+      difficulty: 'easy',
+      type: 'multiple-choice',
+      imageUrl: '',
     }]);
   };
 
@@ -39,22 +41,22 @@ const QuizForm: React.FC = () => {
     e.preventDefault();
     try {
       // แปลงข้อมูลคำถามให้ตรงตามประเภท Question
-      const formattedQuestions: Question[] = questions.map((q, index) => ({
-        id: index + 1, // สร้าง ID สำหรับคำถาม (ใช้ index + 1)
-        text: q.question, // ใช้ข้อความคำถาม
+      const formattedQuestions: Question[] = questions.map((q) => ({
+        id: q.id,
+        text: q.text,
         choices: q.choices.map((choice, choiceIndex) => ({
-          id: `choice-${index + 1}-${choiceIndex + 1}`, // สร้าง ID สำหรับตัวเลือก
+          id: `choice-${q.id}-${choiceIndex + 1}`,
           text: choice,
-          isCorrect: choice === q.correctAnswer, // กำหนดว่าเป็นตัวเลือกที่ถูกต้องหรือไม่
-          explanation: q.explanation || '', // สามารถเพิ่มคำอธิบายได้ถ้าต้องการ
+          isCorrect: choice === q.correctAnswer,
+          explanation: q.explanation || '',
         })),
-        correctAnswer: q.correctAnswer, // เพิ่มคุณสมบัติ correctAnswer
-        explanation: q.explanation || '', // เพิ่มคุณสมบัติ explanation
-        points: q.points, // คะแนน
-        tags: q.tags, // แท็ก
-        difficulty: q.difficulty, // ความยาก
-        type: q.type, // ประเภทคำถาม
-        imageUrl: q.imageUrl || undefined, // กำหนด URL รูปภาพ
+        correctAnswer: q.correctAnswer,
+        explanation: q.explanation || '',
+        points: q.points,
+        tags: q.tags,
+        difficulty: q.difficulty,
+        type: q.type,
+        imageUrl: q.imageUrl || undefined,
       }));
 
       await quizService.createQuiz({ title, questions: formattedQuestions });
@@ -78,10 +80,10 @@ const QuizForm: React.FC = () => {
           <input
             type="text"
             placeholder="Question"
-            value={q.question}
+            value={q.text}
             onChange={(e) => {
               const newQuestions = [...questions];
-              newQuestions[index].question = e.target.value;
+              newQuestions[index].text = e.target.value;
               setQuestions(newQuestions);
             }}
             required
