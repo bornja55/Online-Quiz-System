@@ -1,5 +1,5 @@
 // app/types/auth.types.ts
-import type { User } from './user.types';
+import type { User } from './user.types'; // ตรวจสอบให้แน่ใจว่า User ถูกส่งออกจาก user.types.ts
 export type QuestionType = 'multiple-choice' | 'true-false' | 'matching';
 
 export interface Choice {
@@ -48,8 +48,9 @@ export interface RegisterFormData {
   acceptTerms: boolean;
 }
 
+// ส่งออก User และ AuthState
 export interface AuthState {
-  user: User | null;
+  user: User | null; // ตรวจสอบให้แน่ใจว่า User ถูกส่งออกจาก user.types.ts
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
@@ -72,4 +73,3 @@ export interface EmailVerification {
   email: string;
   code: string;
 }
-
