@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { toast } from 'react-hot-toast';
 import Button from '@/app/components/shared/Button';
 import { Card } from '@/app/components/shared/Card';
-import type { LoginCredentials } from '@/types/auth.types';
+import type { LoginCredentials } from '@/app/types/auth.types';
 
 export default function LoginForm() {
   const router = useRouter();
