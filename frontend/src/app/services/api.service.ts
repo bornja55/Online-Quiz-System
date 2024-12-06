@@ -1,3 +1,4 @@
+// src/app/services/api.service.ts
 import { ApiResponse, ApiError } from '@/app/types/api.types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
@@ -9,8 +10,9 @@ class ApiService {
     data?: any;
     params?: any;
   }): Promise<ApiResponse<T>> {
+    const { method, url, data, params } = config;
+
     try {
-      const { method, url, data, params } = config;
       const headers = {
         'Content-Type': 'application/json',
         // Add auth header if needed
@@ -24,12 +26,12 @@ class ApiService {
       });
 
       if (!response.ok) {
-        throw await response.json();
+        throw await response.json(); // เปลี่ยนให้ throw ข้อความ JSON
       }
 
-      return await response.json();
+      return await response.json(); // ส่งคืนผลลัพธ์ JSON
     } catch (error) {
-      throw this.handleError(error);
+      throw this.handleError(error); // จัดการข้อผิดพลาด
     }
   }
 

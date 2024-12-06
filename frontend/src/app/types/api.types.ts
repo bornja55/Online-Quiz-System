@@ -54,3 +54,16 @@ class ApiService {
 }
 
 export const apiService = new ApiService();
+
+export interface ApiResponse<T> {
+  data: T;
+  message: string;
+  status: number;
+}
+
+export interface ApiError {
+  code: string; // รหัสข้อผิดพลาด
+  message: string; // ข้อความข้อผิดพลาด
+  status: number; // สถานะ HTTP
+  details?: any; // รายละเอียดเพิ่มเติมเกี่ยวกับข้อผิดพลาด
+}
