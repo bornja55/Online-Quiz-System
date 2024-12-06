@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { quizService } from '@/services/quiz.service';
+import { quizService } from '@/app/services/quiz.service';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
