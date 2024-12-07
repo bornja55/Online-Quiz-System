@@ -44,9 +44,9 @@ export const metadata: Metadata = {
     "แบบทดสอบ",
     "การศึกษา"
   ],
-  authors: [{ name: "Your Name" }],
-  creator: "Your Name",
-  publisher: "Your Organization",
+  authors: [{ name: "Siraphob Anuchatbut" }],
+  creator: "Ball Everything",
+  publisher: "English Mania",
   formatDetection: {
     email: false,
     address: false,
