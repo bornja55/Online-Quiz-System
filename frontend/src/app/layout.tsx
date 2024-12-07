@@ -7,7 +7,7 @@ import Navbar from "@/app/components/shared/Navbar";
 import Footer from "@/app/components/shared/Footer";  
 import { Toaster } from "react-hot-toast";  
 import { ThemeProvider } from "@/app/contexts/ThemeContext";  
-import ErrorBoundary from "@/app/components/shared/ErrorBoundary"; // นำเข้า ErrorBoundary  
+import ErrorBoundary from "@/app/components/ErrorBoundary"; // นำเข้า ErrorBoundary  
 
 // Font configuration  
 const geistSans = localFont({  
