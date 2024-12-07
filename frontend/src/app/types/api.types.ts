@@ -67,3 +67,8 @@ export interface ApiError {
   status: number; // สถานะ HTTP
   details?: any; // รายละเอียดเพิ่มเติมเกี่ยวกับข้อผิดพลาด
 }
+ 
+export interface PaginationParams {  
+  page: number;  
+  limit: number;  
+}   

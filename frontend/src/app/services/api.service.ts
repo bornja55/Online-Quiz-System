@@ -1,64 +1,87 @@
-// src/app/services/api.service.ts
-import { ApiResponse, ApiError } from '@/app/types/api.types';
+// src/app/services/api.service.ts  
+import { ApiResponse, ApiError } from '@/app/types/api.types';  
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';  
 
-class ApiService {
-  private async request<T>(config: {
-    method: string;
-    url: string;
-    data?: any;
-    params?: any;
-  }): Promise<ApiResponse<T>> {
-    const { method, url, data, params } = config;
+class ApiService {  
+  private async request<T>(config: {  
+    method: string;  
+    url: string;  
+    data?: any;  
+    params?: any;  
+    headers?: Record<string, string>;  
+  }): Promise<ApiResponse<T>> {  
+    const { method, url, data, params, headers } = config;  
 
-    try {
-      const headers = {
-        'Content-Type': 'application/json',
-        // Add auth header if needed
-      };
+    try {  
+      // Default headers  
+      const defaultHeaders = {  
+        'Content-Type': 'application/json',  
+      };  
 
-      const queryString = params ? `?${new URLSearchParams(params).toString()}` : '';
-      const response = await fetch(`${API_BASE_URL}${url}${queryString}`, {
-        method,
-        headers,
-        body: data ? JSON.stringify(data) : undefined,
-      });
+      // Merge custom headers  
+      const finalHeaders = { ...defaultHeaders, ...headers };  
 
-      if (!response.ok) {
-        throw await response.json(); // เปลี่ยนให้ throw ข้อความ JSON
-      }
+      // Handle query string  
+      const queryString = params  
+        ? `?${new URLSearchParams(params).toString()}`  
+        : '';  
 
-      return await response.json(); // ส่งคืนผลลัพธ์ JSON
-    } catch (error) {
-      throw this.handleError(error); // จัดการข้อผิดพลาด
-    }
-  }
+      // Make the request  
+      const response = await fetch(`${API_BASE_URL}${url}${queryString}`, {  
+        method,  
+        headers: finalHeaders,  
+        body: data ? JSON.stringify(data) : undefined,  
+      });  
 
-  private handleError(error: any): ApiError {
-    return {
-      code: error.code || 'UNKNOWN_ERROR',
-      message: error.message || 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ',
-      status: error.status || 500,
-      details: error.details,
-    };
-  }
+      // Check if the response is not OK  
+      if (!response.ok) {  
+        const errorData = await response.json();  
+        throw this.handleError(errorData, response.status);  
+      }  
 
-  public async get<T>(url: string, params?: any): Promise<ApiResponse<T>> {
-    return this.request<T>({ method: 'GET', url, params });
-  }
+      // Return the JSON response  
+      return await response.json();  
+    } catch (error) {  
+      // Handle network or unexpected errors  
+      throw this.handleError(error);  
+    }  
+  }  
 
-  public async post<T>(url: string, data: any): Promise<ApiResponse<T>> {
-    return this.request<T>({ method: 'POST', url, data });
-  }
+  private handleError(error: any, status?: number): ApiError {  
+    // Handle network errors or unexpected errors  
+    if (error instanceof TypeError) {  
+      return {  
+        code: 'NETWORK_ERROR',  
+        message: 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้',  
+        status: 503,  
+      };  
+    }  
 
-  public async put<T>(url: string, data: any): Promise<ApiResponse<T>> {
-    return this.request<T>({ method: 'PUT', url, data });
-  }
+    // Handle API errors  
+    return {  
+      code: error.code || 'UNKNOWN_ERROR',  
+      message: error.message || 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ',  
+      status: status || error.status || 500,  
+      details: error.details,  
+    };  
+  }  
 
-  public async delete<T>(url: string): Promise<ApiResponse<T>> {
-    return this.request<T>({ method: 'DELETE', url });
-  }
-}
+  public async get<T>(url: string, params?: any): Promise<ApiResponse<T>> {  
+    return this.request<T>({ method: 'GET', url, params });  
+  }  
 
-export const apiService = new ApiService();
+  public async post<T>(url: string, data: any): Promise<ApiResponse<T>> {  
+    return this.request<T>({ method: 'POST', url, data });  
+  }  
+
+  public async put<T>(url: string, data: any): Promise<ApiResponse<T>> {  
+    return this.request<T>({ method: 'PUT', url, data });  
+  }  
+
+  public async delete<T>(url: string): Promise<ApiResponse<T>> {  
+    return this.request<T>({ method: 'DELETE', url });  
+  }  
+}  
+
+export const apiService = new ApiService();  
