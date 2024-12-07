@@ -32,59 +32,60 @@ export const viewport: Viewport = {
   viewportFit: "cover",  
 };  
 
-// Metadata configuration  
-export const metadata: Metadata = {  
-  title: "Online Quiz System",  
-  description: "ระบบทดสอบออนไลน์ที่ยืดหยุ่นและใช้งานง่าย สำหรับการศึกษาและการฝึกอบรม",  
-  keywords: [  
-    "quiz",  
-    "online test",  
-    "education",  
-    "e-learning",  
-    "การสอบออนไลน์",  
-    "แบบทดสอบ",  
-    "การศึกษา",  
-  ],  
-  authors: [{ name: "Your Name" }],  
-  creator: "Your Name",  
-  publisher: "Your Organization",  
-  formatDetection: {  
-    email: false,  
-    address: false,  
-    telephone: false,  
-  },  
-  openGraph: {  
-    title: "Online Quiz System",  
-    description: "ระบบทดสอบออนไลน์ที่ยืดหยุ่นและใช้งานง่าย",  
-    url: "https://your-domain.com",  
-    siteName: "Online Quiz System",  
-    locale: "th_TH",  
-    type: "website",  
-  },  
-  robots: {  
-    index: true,  
-    follow: true,  
-    googleBot: {  
-      index: true,  
-      follow: true,  
-      "max-video-preview": -1,  
-      "max-image-preview": "large",  
-      "max-snippet": -1,  
-    },  
-  },  
-  icons: {  
-    icon: "/favicon.ico",  
-    shortcut: "/favicon-16x16.png",  
-    apple: "/apple-touch-icon.png",  
-  },  
-  manifest: "/site.webmanifest",  
-  twitter: {  
-    card: "summary_large_image",  
-    title: "Online Quiz System",  
-    description: "ระบบทดสอบออนไลน์ที่ยืดหยุ่นและใช้งานง่าย",  
-    creator: "@yourusername",  
-  },  
-};  
+// Metadata configuration
+export const metadata: Metadata = {
+  title: "Online Quiz System",
+  description: "ระบบทดสอบออนไลน์ที่ยืดหยุ่นและใช้งานง่าย สำหรับการศึกษาและการฝึกอบรม",
+  keywords: [
+    "quiz",
+    "online test",
+    "education",
+    "e-learning",
+    "การสอบออนไลน์",
+    "แบบทดสอบ",
+    "การศึกษา"
+  ],
+  authors: [{ name: "Siraphob Anuchatbut" }],
+  creator: "Ball Everything",
+  publisher: "English Mania",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: "Online Quiz System",
+    description: "ระบบทดสอบออนไลน์ที่ยืดหยุ่นและใช้งานง่าย",
+    url: "https://your-domain.com",
+    siteName: "Online Quiz System",
+    locale: "th_TH",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/favicon-16x16.png",
+  },
+  manifest: "/site.webmanifest",
+  twitter: {
+    card: "summary_large_image",
+    title: "Online Quiz System",
+    description: "ระบบทดสอบออนไลน์ที่ยืดหยุ่นและใช้งานง่าย",
+    creator: "@yourusername",
+  },
+};
+
 
 // RootLayout component  
 export default function RootLayout({  
