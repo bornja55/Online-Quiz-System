@@ -1,35 +1,36 @@
-// app/layout.tsx
+// app/layout.tsx  
 
-import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
-import "./globals.css"; // นำเข้าไฟล์ CSS ทั่วไป
-import Navbar from "@/app/components/shared/Navbar"; // นำเข้า Navbar
-import Footer from "@/app/components/shared/Footer"; // นำเข้า Footer
-import { Toaster } from "react-hot-toast"; // นำเข้า Toaster สำหรับการแจ้งเตือน
-import { ThemeProvider } from "@/app/contexts/ThemeContext"; // นำเข้า ThemeProvider
+import type { Metadata, Viewport } from "next";  
+import localFont from "next/font/local";  
+import "./globals.css";  
+import Navbar from "@/app/components/shared/Navbar";  
+import Footer from "@/app/components/shared/Footer";  
+import { Toaster } from "react-hot-toast";  
+import { ThemeProvider } from "@/app/contexts/ThemeContext";  
+import ErrorBoundary from "@/app/components/ErrorBoundary"; // นำเข้า ErrorBoundary  
 
-// Font configuration
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-  display: "swap",
-});
+// Font configuration  
+const geistSans = localFont({  
+  src: "./fonts/GeistVF.woff",  
+  variable: "--font-geist-sans",  
+  weight: "100 900",  
+  display: "swap",  
+});  
 
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-  display: "swap",
-});
+const geistMono = localFont({  
+  src: "./fonts/GeistMonoVF.woff",  
+  variable: "--font-geist-mono",  
+  weight: "100 900",  
+  display: "swap",  
+});  
 
-// Viewport configuration
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
-  viewportFit: "cover",
-};
+// Viewport configuration  
+export const viewport: Viewport = {  
+  width: "device-width",  
+  initialScale: 1,  
+  maximumScale: 1,  
+  viewportFit: "cover",  
+};  
 
 // Metadata configuration
 export const metadata: Metadata = {
@@ -85,47 +86,50 @@ export const metadata: Metadata = {
   },
 };
 
-// RootLayout component
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <ThemeProvider> {/* ห่อหุ้มด้วย ThemeProvider */}
-      <html lang="th" className={`${geistSans.variable} ${geistMono.variable}`}>
-        <body className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-          <Navbar />
-          <main className="flex-grow container mx-auto px-4 py-8">
-            {children}
-          </main>
-          <Footer />
-          <Toaster
-            position="top-right" // ตำแหน่งของ Toaster
-            toastOptions={{
-              duration: 5000, // ระยะเวลาที่ toast จะแสดง
-              style: {
-                background: "#363636", // สีพื้นหลังของ toast
-                color: "#fff", // สีตัวอักษร
-              },
-              success: {
-                duration: 3000, // ระยะเวลาสำหรับ toast ที่สำเร็จ
-                iconTheme: {
-                  primary: "#4ade80", // สีไอคอนสำหรับ toast ที่สำเร็จ
-                  secondary: "#fff", // สีไอคอนรอง
-                },
-              },
-              error: {
-                duration: 4000, // ระยะเวลาสำหรับ toast ที่มีข้อผิดพลาด
-                iconTheme: {
-                  primary: "#ef4444", // สีไอคอนสำหรับ toast ที่มีข้อผิดพลาด
-                  secondary: "#fff", // สีไอคอนรอง
-                },
-              },
-            }}
-          />
-        </body>
-      </html>
-    </ThemeProvider>
-  );
-}
+
+// RootLayout component  
+export default function RootLayout({  
+  children,  
+}: {  
+  children: React.ReactNode;  
+}) {  
+  return (  
+    <ThemeProvider>  
+      <html lang="th" className={`${geistSans.variable} ${geistMono.variable}`}>  
+        <body className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-300">  
+          <Navbar />  
+          <ErrorBoundary> {/* ใช้ ErrorBoundary ครอบส่วน children */}  
+            <main className="flex-grow container mx-auto px-4 py-8">  
+              {children}  
+            </main>  
+          </ErrorBoundary>  
+          <Footer />  
+          <Toaster  
+            position="top-right"  
+            toastOptions={{  
+              duration: 5000,  
+              style: {  
+                background: "#363636",  
+                color: "#fff",  
+              },  
+              success: {  
+                duration: 3000,  
+                iconTheme: {  
+                  primary: "#4ade80",  
+                  secondary: "#fff",  
+                },  
+              },  
+              error: {  
+                duration: 4000,  
+                iconTheme: {  
+                  primary: "#ef4444",  
+                  secondary: "#fff",  
+                },  
+              },  
+            }}  
+          />  
+        </body>  
+      </html>  
+    </ThemeProvider>  
+  );  
+}  
