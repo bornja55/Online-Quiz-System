@@ -1,5 +1,6 @@
 // src/app/services/auth.service.ts  
-import { LoginCredentials, RegisterFormData, User } from '@/app/types/auth.types';  
+import { LoginCredentials, RegisterFormData } from '@/app/types/auth.types';  
+import { User } from '@/app/types/user.types'; // เปลี่ยนแหล่งที่มาของ User  
 
 class AuthService {  
   private baseUrl = process.env.NEXT_PUBLIC_API_URL;  
@@ -28,26 +29,26 @@ class AuthService {
 
   async register(data: RegisterFormData): Promise<User> {  
     try {  
-      const { name, email, password, role = "student" } = data; // กำหนดค่าเริ่มต้นให้ role  
+      const { name, email, password, role = 'student' } = data;  
       const response = await fetch(`${this.baseUrl}/auth/register`, {  
         method: 'POST',  
         headers: {  
           'Content-Type': 'application/json',  
         },  
-        body: JSON.stringify({ name, email, password, role }), // ส่ง role ที่มีค่าแน่นอน  
+        body: JSON.stringify({ name, email, password, role }),  
       });  
-  
+
       if (!response.ok) {  
         const error = await response.json();  
         throw new Error(error.message || 'เกิดข้อผิดพลาดในการลงทะเบียน');  
       }  
-  
+
       const result = await response.json();  
       return result.user;  
     } catch (error) {  
       throw error;  
     }  
-  }    
+  }  
 
   async logout(): Promise<void> {  
     try {  
