@@ -28,25 +28,26 @@ class AuthService {
 
   async register(data: RegisterFormData): Promise<User> {  
     try {  
+      const { name, email, password, role = "student" } = data; // กำหนดค่าเริ่มต้นให้ role  
       const response = await fetch(`${this.baseUrl}/auth/register`, {  
         method: 'POST',  
         headers: {  
           'Content-Type': 'application/json',  
         },  
-        body: JSON.stringify(data),  
+        body: JSON.stringify({ name, email, password, role }), // ส่ง role ที่มีค่าแน่นอน  
       });  
-
+  
       if (!response.ok) {  
         const error = await response.json();  
         throw new Error(error.message || 'เกิดข้อผิดพลาดในการลงทะเบียน');  
       }  
-
+  
       const result = await response.json();  
       return result.user;  
     } catch (error) {  
       throw error;  
     }  
-  }  
+  }    
 
   async logout(): Promise<void> {  
     try {  

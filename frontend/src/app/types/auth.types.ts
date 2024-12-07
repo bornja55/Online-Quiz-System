@@ -46,7 +46,7 @@ export interface RegisterFormData {
   password: string;
   confirmPassword: string;
   name: string;
-  role: 'teacher' | 'student';
+  role?: "teacher" | "student"; // เปลี่ยน role ให้เป็น optional  
   acceptTerms: boolean;
 }
 
