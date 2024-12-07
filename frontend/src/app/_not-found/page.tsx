@@ -1,11 +1,5 @@
-<<<<<<< HEAD:frontend/src/app/_not-found/page.tsx
-//app/_not-found
-
+//src/app/_not-found/page.tsx
 import Link from 'next/link'
-=======
-// app/not-found.tsx  
-import Link from 'next/link';  
->>>>>>> 5db21789e24a22199f97eb32d6aa0d608c6f53cd:frontend/src/app/not-found.tsx
 
 export default function NotFound() {  
   return (  
