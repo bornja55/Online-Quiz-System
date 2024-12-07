@@ -1,3 +1,4 @@
+//app/tsconfig.json
 {
   "compilerOptions": {
     "target": "ES2017",
