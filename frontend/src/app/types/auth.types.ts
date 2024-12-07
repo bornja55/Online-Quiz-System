@@ -44,10 +44,10 @@ export interface RegisterCredentials {
 export interface RegisterFormData {
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
   name: string;
   role?: "teacher" | "student"; // เปลี่ยน role ให้เป็น optional  
-  acceptTerms: boolean;
+  acceptTerms?: boolean;
 }
 
 // ส่งออก User และ AuthState

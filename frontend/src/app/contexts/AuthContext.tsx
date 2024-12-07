@@ -70,26 +70,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const register = async (name: string, email: string, password: string, role?: 'teacher' | 'student') => {
-    try {
-      setState(prev => ({ ...prev, isLoading: true, error: null }));
-      const user = await authService.register({ name, email, password, role });
-      setState({
-        user,
-        isAuthenticated: true,
-        isLoading: false,
-        error: null,
-      });
-      router.push('/dashboard');
-    } catch (error) {
-      setState(prev => ({
-        ...prev,
-        isLoading: false,
-        error: error instanceof Error ? error.message : 'เกิดข้อผิดพลาดในการลงทะเบียน',
-      }));
-      throw error;
-    }
-  };
+  const register = async (  
+    name: string,  
+    email: string,  
+    password: string,  
+    role?: 'teacher' | 'student'  
+  ) => {  
+    try {  
+      setState(prev => ({ ...prev, isLoading: true, error: null }));  
+      const user = await authService.register({  
+        name,  
+        email,  
+        password,  
+        confirmPassword: password, // ใช้ password เดียวกันสำหรับ confirmPassword  
+        acceptTerms: true, // กำหนดค่า acceptTerms เป็น true  
+        role,  
+      });  
+      setState({  
+        user,  
+        isAuthenticated: true,  
+        isLoading: false,  
+        error: null,  
+      });  
+      router.push('/dashboard');  
+    } catch (error) {  
+      setState(prev => ({  
+        ...prev,  
+        isLoading: false,  
+        error: error instanceof Error ? error.message : 'เกิดข้อผิดพลาดในการลงทะเบียน',  
+      }));  
+      throw error;  
+    }  
+  };  
 
   const logout = async () => {
     try {
