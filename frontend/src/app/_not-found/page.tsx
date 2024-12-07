@@ -1,3 +1,5 @@
+//app/_not-found
+
 import Link from 'next/link'
 
 export default function NotFound() {
