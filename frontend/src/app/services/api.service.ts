@@ -1,5 +1,5 @@
 // src/app/services/api.service.ts  
-import { ApiResponse, ApiError } from '@/app/types/api.types';  
+import type { ApiResponse, ApiError } from '@/app/types/api.types';  
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';  
 
@@ -9,47 +9,36 @@ class ApiService {
     url: string;  
     data?: any;  
     params?: any;  
-    headers?: Record<string, string>;  
   }): Promise<ApiResponse<T>> {  
-    const { method, url, data, params, headers } = config;  
+    const { method, url, data, params } = config;  
 
     try {  
-      // Default headers  
-      const defaultHeaders = {  
+      const headers = {  
         'Content-Type': 'application/json',  
       };  
 
-      // Merge custom headers  
-      const finalHeaders = { ...defaultHeaders, ...headers };  
-
-      // Handle query string  
       const queryString = params  
         ? `?${new URLSearchParams(params).toString()}`  
         : '';  
 
-      // Make the request  
       const response = await fetch(`${API_BASE_URL}${url}${queryString}`, {  
         method,  
-        headers: finalHeaders,  
+        headers,  
         body: data ? JSON.stringify(data) : undefined,  
       });  
 
-      // Check if the response is not OK  
       if (!response.ok) {  
         const errorData = await response.json();  
         throw this.handleError(errorData, response.status);  
       }  
 
-      // Return the JSON response  
       return await response.json();  
     } catch (error) {  
-      // Handle network or unexpected errors  
       throw this.handleError(error);  
     }  
   }  
 
   private handleError(error: any, status?: number): ApiError {  
-    // Handle network errors or unexpected errors  
     if (error instanceof TypeError) {  
       return {  
         code: 'NETWORK_ERROR',  
@@ -58,7 +47,6 @@ class ApiService {
       };  
     }  
 
-    // Handle API errors  
     return {  
       code: error.code || 'UNKNOWN_ERROR',  
       message: error.message || 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ',  
