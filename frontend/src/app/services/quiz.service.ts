@@ -1,7 +1,7 @@
 // src/app/services/quiz.service.ts  
 import { apiService } from './api.service';  
 import type { Quiz, Question, QuizAttempt } from '@/app/types/quiz.types';  
-import type { PaginationParams } from '@/app/types/api.types';  
+import type { PaginationParams } from '@/app/types/api.types';    
 
 class QuizService {  
   private readonly BASE_URL = '/quizzes';  
